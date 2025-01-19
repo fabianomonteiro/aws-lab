@@ -1,6 +1,3 @@
-Aqui está um exemplo de README para o seu projeto:
-
-```markdown
 # AWS Lab - Infraestrutura com Terraform
 
 Este projeto contém a infraestrutura como código (IaC) para provisionar uma aplicação utilizando **AWS** e **Terraform**. Ele cobre a criação de recursos como ECS (Elastic Container Service), ALB (Application Load Balancer), VPC, subnets e demais configurações necessárias para o funcionamento da aplicação.
@@ -124,6 +121,3 @@ Este projeto está licenciado sob a [MIT License](LICENSE).
 ## 📞 Suporte
 
 Se você tiver dúvidas ou problemas, entre em contato com **famonteiro85@gmail.com**.
-```
-
-Adapte os valores, variáveis e contatos para o seu contexto. Se precisar ajustar algo, me avise!
