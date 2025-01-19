@@ -1,0 +1,7 @@
+venv/*
+venv/**
+*.pyc
+__pycache__/*
+.env
+zip_lambda.sh
+.zipignore

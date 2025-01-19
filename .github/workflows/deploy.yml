@@ -1,0 +1,78 @@
+# name: Deploy to AWS
+
+# on:
+#   push:
+#     branches:
+#       - main # Trigger no push para a branch 'main'
+
+# jobs:
+#   deploy:
+#     name: Terraform Deploy
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       # Step 1: Checkout o código do repositório
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       # Step 2: Configuração do Node.js (necessário para o build da Lambda)
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+
+#       # Step 3: Instalar dependências e criar o pacote da Lambda
+#       - name: Create Lambda ZIP
+#         run: |
+#           chmod +x app/lambda/src/zip_lambda.sh
+#           cd app/lambda/src
+#           ./zip_lambda.sh
+
+#       # Step 4: Configuração do Java para o build da aplicação Kotlin
+#       - name: Set up JDK
+#         uses: actions/setup-java@v3
+#         with:
+#           distribution: 'temurin'
+#           java-version: '17'
+
+#       # Step 5: Build da aplicação Kotlin e criação do JAR
+#       - name: Build Kotlin App
+#         run: ./gradlew build
+#         working-directory: app
+
+#       # Step 6: Login no Amazon ECR
+#       - name: Login to Amazon ECR
+#         id: login-ecr
+#         uses: aws-actions/amazon-ecr-login@v1
+
+#       # Step 5: Build e Push da Imagem Docker
+#       - name: Build and Push Docker Image
+#         run: |
+#           docker build -t kotlin-app:latest ./app
+#           docker tag kotlin-app:latest ${{ steps.login-ecr.outputs.registry }}/kotlin-app:latest
+#           docker push ${{ steps.login-ecr.outputs.registry }}/kotlin-app:latest
+
+#       # Step 8: Configurar o Terraform
+#       - name: Setup Terraform
+#         uses: hashicorp/setup-terraform@v2
+#         with:
+#           terraform_version: 1.5.6 # Atualize conforme necessário
+
+#       # Step 9: Inicializar Terraform
+#       - name: Terraform Init
+#         working-directory: terraform
+#         run: terraform init
+
+#       # Step 10: Planejar mudanças no Terraform
+#       - name: Terraform Plan
+#         working-directory: infra
+#         run: terraform plan -out=tfplan
+
+#       # Step 11: Aplicar mudanças no Terraform
+#       - name: Terraform Apply
+#         working-directory: terraform
+#         run: terraform apply -auto-approve tfplan
+#         env:
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           AWS_REGION: "us-east-1"

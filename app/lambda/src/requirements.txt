@@ -1,0 +1,2 @@
+# Dependências para a Lambda
+boto3
